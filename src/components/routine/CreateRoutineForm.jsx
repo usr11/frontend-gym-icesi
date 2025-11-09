@@ -37,7 +37,7 @@ const CreateRoutineForm = () => {
           <Input text="URL image" />
           <Textarea text="Descripción"></Textarea>
         </div>
-        <div className="flex flex-col p-5  w-160 h-[378px] gap-5 overflow-y-auto border-2 border-primary rounded-md">
+        <div className="flex flex-col p-5  w-150 h-[378px] gap-5 overflow-y-auto border-2 border-primary rounded-md">
           <h2>Ejercicios para agregar</h2>
           {exercises.length !== 0 &&
             exercises.map((exercise) => (
