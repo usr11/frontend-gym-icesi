@@ -1,5 +1,6 @@
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import Textarea from "../ui/Textarea";
 import ExerciseSecondaryCard from "../exercise/ExerciseSecondaryCard";
 
 const exercises = [
@@ -30,22 +31,20 @@ const CreateRoutineForm = () => {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex justify-between px-10">
-        <div className="flex flex-col gap-10 w-100 bg-amber-200 justify-center">
+        <div className="flex flex-col gap-10 w-100 justify-center">
           <Input text="Tipo" />
           <Input text="Nombre" />
-          <Input text="Descripción" />
+          <Input text="URL image" />
+          <Textarea text="Descripción"></Textarea>
         </div>
-        <div className="flex flex-col p-5 bg-pink-200 w-140 h-[300px] gap-5 overflow-y-auto border-2 border-primary rounded-md">
+        <div className="flex flex-col p-5  w-160 h-[378px] gap-5 overflow-y-auto border-2 border-primary rounded-md">
           <h2>Ejercicios para agregar</h2>
-          {exercises.length !== 0 && 
+          {exercises.length !== 0 &&
             exercises.map((exercise) => (
               <ExerciseSecondaryCard key={exercise.id} exercise={exercise} />
-            ))
-          }
-      
+            ))}
         </div>
       </div>
-
       <div className="w-200 mx-auto">
         <Button>Crear</Button>
       </div>

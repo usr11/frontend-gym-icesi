@@ -7,7 +7,7 @@ const RoutineCard = ({ routine, lessInfo }) => {
   // falta redireccion de ver detalles, con id
 
   return (
-    <div className="border-2 border-primary h-90 rounded-md">
+    <div className="border-2 border-primary h-90 rounded-md hover:translate-y-2 transition-all ease-out duration-150 bg-background">
       <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">
         <img
           src={urlImg}

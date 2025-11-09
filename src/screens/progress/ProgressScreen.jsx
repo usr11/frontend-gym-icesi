@@ -1,7 +1,30 @@
+import ProgressComparison from "../../components/progress/ProgressComparison";
+import ProgressRecord from "../../components/progress/ProgressRecord";
+import CreateProgressForm from "../../components/progress/CreateProgressForm";
+
 const ProgressScreen = () => {
+  return (
+    <div className="h-auto">
+      <div className=" p-3 rounded-md">
+        <h2 className="text-3xl mb-5">Tu progreso</h2>
+        <div className="">
+          <ProgressComparison />
+        </div>
+      </div>
+      <div className="p-3 rounded-md mt-10">
+        <h2 className="text-3xl">Ultimos registro</h2>
+        <div className="">
+          <ProgressRecord />
+        </div>
+      </div>
+      <div className="p-5 rounded-md mt-10 shadow-md bg-background">
+        <h2 className="text-3xl mb-10">Registrar progreso</h2>
+      <CreateProgressForm />
+      </div>
 
-  return <h2>Progress Screen</h2>
+      
+    </div>
+  );
+};
 
-}
-
-export default ProgressScreen
+export default ProgressScreen;

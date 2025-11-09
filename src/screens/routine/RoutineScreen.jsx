@@ -26,7 +26,7 @@ const RoutineScreen = () => {
       name: "Rutina 1",
       isCertified: false,
       startDate: "12/03/2020",
-      createBy: "Juan"
+      createdBy: "Juan"
     },
     {
       id:"2",
@@ -34,7 +34,7 @@ const RoutineScreen = () => {
       name: "Rutina 2",
       isCertified: true,
       startDate: "12/03/2020",
-      createBy: "Pablo"
+      createdBy: "Pablo"
     },
     {
       id:"3",
@@ -42,7 +42,7 @@ const RoutineScreen = () => {
       name: "Rutina 3",
       isCertified: false,
       startDate: "12/03/2020",
-      createBy: "Sebastian"
+      createdBy: "Sebastian"
     },
     { 
       id:"4",
@@ -50,13 +50,13 @@ const RoutineScreen = () => {
       name: "Rutina 4",
       isCertified: true,
       startDate: "12/03/2020",
-      createBy: "Miguel"
+      createdBy: "Miguel"
     },
   ];
 
   return (
     <div className="h-auto">
-      <div className="backdrop-blur-[3px] p-3 ">
+      <div className=" p-3 rounded-md">
         <h2 className="text-3xl mb-10">Rutinas activas</h2>
         <div className="routine-slider">
           <Slider {...settingsSlide}>
@@ -75,7 +75,7 @@ const RoutineScreen = () => {
       
 
 
-      <div className="bg-amber-200 mt-15">
+      <div className=" mt-15 p-3 rounded-md">
         <h2 className="text-3xl mb-10">Otras rutinas</h2>
         <div className="routine-slider">
           <Slider {...settingsSlide}>
@@ -86,9 +86,9 @@ const RoutineScreen = () => {
           </Slider>
         </div>
       </div>
-      <div className="bg-red-200 mt-15">
+      <div className=" mt-15 p-5 rounded-md shadow-md bg-background">
         <h2 className="text-3xl mb-10">Crear rutina</h2>
-        <div className=" bg-blue-200 m-5 py-10 ">
+        <div className="  m-5 py-10 ">
               <CreateRoutineForm/>
         </div>
       </div>

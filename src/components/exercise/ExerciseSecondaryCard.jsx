@@ -9,7 +9,7 @@ const ExerciseSecondaryCard = ({ exercise }) => {
   const { id, name, createdBy, type, description } = exercise;
 
   return (
-    <div className="flex flex-row  bg-green-300 h-30 p-5 border-2 border-primary rounded-md">
+    <div className="flex flex-row  bg-primary/10 h-30 p-5 border-2 border-primary rounded-md hover:translate-y-1 transition-all ease-out duration-150">
       <div className="my-auto">
         <h2 className="mb-3">{name}</h2>
         <p>

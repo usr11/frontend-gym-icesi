@@ -5,14 +5,14 @@ import DotGrid from "../components/external/DotGrid";
 const HomeScreen = () => {
   return (
     <div className="relative w-full">
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10 bg-primary/5">
         <DotGrid
           dotSize={3}
           gap={30}
-          baseColor="#E2E8F0"
+          baseColor="#d9d9d9"
           activeColor="#0b2447"
-          proximity={120}
-          shockRadius={350}
+          proximity={80}
+          shockRadius={100}
           shockStrength={5}
           resistance={750}
           returnDuration={3.5}
@@ -22,8 +22,8 @@ const HomeScreen = () => {
       <main className="p-10 mt-15 mx-25">
         <Outlet />
       </main>
-      <footer className="h-30 bg-secondary-light flex">
-        <div className="m-auto">
+      <footer className="h-30 bg-[#E9E9F5] flex border-t-2">
+        <div className="m-auto ">
           <p>Ⓒ 2025. Gym icesi. Reservados todos los derechos</p>
         </div>
       </footer>

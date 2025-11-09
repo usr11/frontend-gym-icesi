@@ -6,7 +6,7 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
   // id para la redireccion
 
   return (
-    <div className="border-2 border-primary h-90 rounded-md">
+    <div className="border-2 border-primary h-90 rounded-md hover:translate-y-2 transition-all ease-out duration-150 bg-background">
       <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">
         <img
           src={urlImg}
@@ -18,14 +18,16 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
         <h3 className="text-xl mb-2">{name}</h3>
         <div className="flex flex-col">
           <p className="text-md">
-            Dificultad: 
+            Dificultad:
             <span className="text-sm"> {difficulty}</span>
           </p>
-          {!lessInfo && (
+          {!lessInfo ? (
             <p className="text-md">
-              Creada por: 
+              Creada por:
               <span className="text-sm"> {createdBy}</span>
             </p>
+          ) : (
+            <p className="text-md hover:underline hover:cursor-pointer">Ver progreso</p>
           )}
 
           <div className="flex mt-2">

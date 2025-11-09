@@ -1,34 +1,34 @@
-.form__group_one {
+.textarea__group_one {
   position: relative;
 }
 
-.form__group_oneform__field {
+.textarea__group_onetextarea__field {
   border: 2px solid silver !important;
   border-radius: 5px;
   box-sizing: border-box;
   color: #0b2447;
-  height: 45px;
-  padding: 0px 15px;
+  height: 120px;
+  padding: 15px 15px;
   box-shadow: 5px 5px 0 0;
   transition: all ease-in 0.1s;
   width: 100%;
 }
 
-.form__group_one:hover {
+.textarea__group_one:hover {
   font-weight: bold;
 }
 
-.form__group_oneform__field::placeholder {
+.textarea__group_onetextarea__field::placeholder {
   color: transparent;
 }
 
-.form__group_oneform__field:placeholder-shown ~ .form__group_oneform__label {
+.textarea__group_onetextarea__field:placeholder-shown ~ .textarea__group_onetextarea__label {
   top: 10px;
   border-right: none;
   border-left: none;
 }
 
-.form__group_oneform__label {
+.textarea__group_onetextarea__label {
   background-color: #f9fafb;
   color: #9b9b9b;
   display: block;
@@ -41,7 +41,7 @@
   transition: 0.2s;
 }
 
-.form__group_oneform__field:focus {
+.textarea__group_onetextarea__field:focus {
   border: 2px solid #0b2447 !important;
   outline: none;
   box-shadow: none;
@@ -50,7 +50,7 @@
   font-weight: bold;
 }
 
-.form__group_oneform__field:focus ~ .form__group_oneform__label {
+.textarea__group_onetextarea__field:focus ~ .textarea__group_onetextarea__label {
   background-color: #f9fafb;
   color: #0b2447;
   font-size: 0.9em;
