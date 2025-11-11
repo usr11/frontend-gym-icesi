@@ -5,24 +5,22 @@ import CreateProgressForm from "../../components/progress/CreateProgressForm";
 const ProgressScreen = () => {
   return (
     <div className="h-auto">
-      <div className=" p-3 rounded-md">
+      <div className="p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-5">Tu progreso</h2>
         <div className="">
           <ProgressComparison />
         </div>
       </div>
-      <div className="p-3 rounded-md mt-10">
+      <div className="mt-15 p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl">Ultimos registro</h2>
         <div className="">
           <ProgressRecord />
         </div>
       </div>
-      <div className="p-5 rounded-md mt-10 shadow-md bg-background">
+      <div className="p-15 rounded-md mt-10 shadow-md bg-background">
         <h2 className="text-3xl mb-10">Registrar progreso</h2>
-      <CreateProgressForm />
+        <CreateProgressForm />
       </div>
-
-      
     </div>
   );
 };

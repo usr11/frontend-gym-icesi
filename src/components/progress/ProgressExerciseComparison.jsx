@@ -50,7 +50,7 @@ const ProgressExerciseComparison = () => {
   const data = allData[exercise];
 
   return (
-    <div className="bg-white p-5 rounded-md shadow-md">
+    <div className="">
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <div>
           <h3 className="text-xl font-semibold text-primary mb-1">

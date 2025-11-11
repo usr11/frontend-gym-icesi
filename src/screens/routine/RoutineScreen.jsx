@@ -21,42 +21,42 @@ const RoutineScreen = () => {
 
   const routines = [
     {
-      id:"1",
+      id: "1",
       urlImg: "aaa",
       name: "Rutina 1",
       isCertified: false,
       startDate: "12/03/2020",
-      createdBy: "Juan"
+      createdBy: "Juan",
     },
     {
-      id:"2",
+      id: "2",
       urlImg: "aaa",
       name: "Rutina 2",
       isCertified: true,
       startDate: "12/03/2020",
-      createdBy: "Pablo"
+      createdBy: "Pablo",
     },
     {
-      id:"3",
+      id: "3",
       urlImg: "aaa",
       name: "Rutina 3",
       isCertified: false,
       startDate: "12/03/2020",
-      createdBy: "Sebastian"
+      createdBy: "Sebastian",
     },
-    { 
-      id:"4",
+    {
+      id: "4",
       urlImg: "aaa",
       name: "Rutina 4",
       isCertified: true,
       startDate: "12/03/2020",
-      createdBy: "Miguel"
+      createdBy: "Miguel",
     },
   ];
 
   return (
     <div className="h-auto">
-      <div className=" p-3 rounded-md">
+      <div className=" p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Rutinas activas</h2>
         <div className="routine-slider">
           <Slider {...settingsSlide}>
@@ -66,30 +66,27 @@ const RoutineScreen = () => {
               ))}
           </Slider>
         </div>
-        {/* <div className="mt-15 ">
-          <h2 className="text-3xl mb-10">Calendario</h2>
-          <div className="bg-blue-200 h-150 m-10">
-          </div>
-        </div> */}
       </div>
-      
 
-
-      <div className=" mt-15 p-3 rounded-md">
+      <div className=" mt-15 p-15 rounded-md shadow-md bg-background">
+        <h2 className="text-3xl mb-10">Crear rutina</h2>
+        <div className="  m-5 py-10 ">
+          <CreateRoutineForm />
+        </div>
+      </div>
+      <div className=" mt-15 p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Otras rutinas</h2>
         <div className="routine-slider">
           <Slider {...settingsSlide}>
             {routines.length !== 0 &&
               routines.map((routine) => (
-                <RoutineCard key={routine.id} routine={routine} lessInfo={true}/>
+                <RoutineCard
+                  key={routine.id}
+                  routine={routine}
+                  lessInfo={true}
+                />
               ))}
           </Slider>
-        </div>
-      </div>
-      <div className=" mt-15 p-5 rounded-md shadow-md bg-background">
-        <h2 className="text-3xl mb-10">Crear rutina</h2>
-        <div className="  m-5 py-10 ">
-              <CreateRoutineForm/>
         </div>
       </div>
     </div>

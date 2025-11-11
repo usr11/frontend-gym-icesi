@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,21 +9,49 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import GetProgressInRange from "../../api/progress/GetProgressInRange";
 
 const ProgressComparison = () => {
   const [exercise, setExercise] = useState("");
   const [dateStart, setDateStart] = useState("");
   const [dateEnd, setDateEnd] = useState("");
+  const [progressList, setProgressList] = useState([]);
+  const [error, setError] = useState("");
 
-  const data = [
-    { date: "2025-10-01", reps: 10, sets: 3, weight: 60, effortLevel: 6 },
-    { date: "2025-10-08", reps: 10, sets: 4, weight: 65, effortLevel: 7 },
-    { date: "2025-10-15", reps: 14, sets: 4, weight: 70, effortLevel: 8 },
-    { date: "2025-10-15", reps: 14, sets: 4, weight: 70, effortLevel: 8 },
+  const exercises = [
+    {
+      name: "Press de banca",
+    },
+    {
+      name: "Sentadilla",
+    },
+    {
+      name: "Abdominales",
+    },
+    {
+      name: "Running",
+    },
   ];
 
+  useEffect(() => {
+    if (!exercise) return;
+
+    try {
+      const data = GetProgressInRange({
+        dateStart,
+        dateEnd,
+        exercise,
+      });
+      setProgressList(data);
+      setError("");
+    } catch (e) {
+      setError("No hay progresos registrados para esta búsqueda");
+      setProgressList([]);
+    }
+  }, [exercise, dateStart, dateEnd]);
+
   return (
-    <div className="bg-white p-4 rounded-md shadow-md">
+    <div className="p-4">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
         <div>
           <p className="font-semibold mb-1">Selecciona el ejercicio:</p>
@@ -33,10 +61,15 @@ const ProgressComparison = () => {
             className="border border-gray-400 rounded-md p-2 bg-white"
           >
             <option value="">Elegir ejercicio</option>
-            <option value="pressBanca">Press de banca</option>
-            <option value="sentadilla">Sentadillas</option>
-            <option value="trote">Trote</option>
-            <option value="pesoMuerto">Peso muerto</option>
+            {exercises.length !== 0 &&
+              exercises.map((obj) => (
+                <option value={obj.name}>{obj.name}</option>
+              ))}
+
+            {/* <option value="e">Press de banca</option>
+            <option value="b">Sentadillas</option>
+            <option value="c">Abs</option>
+            <option value="d">T</option> */}
           </select>
         </div>
 
@@ -63,30 +96,82 @@ const ProgressComparison = () => {
       </div>
 
       <div className="mt-5">
-        {exercise ? (
+        {exercise && error === "" ? (
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
+            <LineChart data={progressList}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line
+              {progressList.some((item) => item.reps !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="reps"
+                  name="repeticiones"
+                  stroke="#0000ff"
+                />
+              )}
+              {progressList.some((item) => item.time !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="time"
+                  name="Tiempo"
+                  stroke="#0000ff"
+                />
+              )}
+
+              {progressList.some((item) => item.sets !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="sets"
+                  name="series"
+                  stroke="#FF0000"
+                />
+              )}
+              {progressList.some((item) => item.distance !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="distance"
+                  name="Distancia"
+                  stroke="#FF0000"
+                />
+              )}
+              {progressList.some((item) => item.weight !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="weight"
+                  name="Peso"
+                  stroke="#FFA500"
+                />
+              )}
+              {progressList.some((item) => item.rhythm !== undefined) && (
+                <Line
+                  type="monotone"
+                  dataKey="rhythm"
+                  name="Ritmo"
+                  stroke="#FFA500"
+                />
+              )}
+              {/* <Line
                 type="monotone"
-                dataKey="reps"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-              <Line type="monotone" dataKey="weight" stroke="#82ca9d" />
-              <Line type="monotone" dataKey="effortLevel" stroke="#ffc658" />
+                dataKey="effortLevel"
+                name="Nivel de esfuerzo"
+                stroke="#ffc658"
+              /> */}
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-gray-600 text-center ">
-            Selecciona un ejercicio para ver su progreso
+          <p
+            className={`text-center ${
+              error ? "text-red-500" : "text-gray-600"
+            }`}
+          >
+            {error || "Selecciona un ejercicio para ver su progreso"}
           </p>
         )}
       </div>
+      <div></div>
     </div>
   );
 };

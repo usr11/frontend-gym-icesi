@@ -1,74 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../ui/Button";
+import GetProgressByUser from "../../api/progress/GetProgressByUser";
 
 const ProgressRecord = () => {
   const [showAll, setShowAll] = useState(false);
+  const [progressList, setProgresList] = useState([])
 
-  const records = [
-    {
-      id: 1,
-      date: "2025-11-01",
-      exercise: "Press de banca",
-      reps: 12,
-      sets: 4,
-      weight: 65,
-      effortLevel: 7,
-    },
-    {
-      id: 2,
-      date: "2025-10-28",
-      exercise: "Sentadillas",
-      reps: 10,
-      sets: 3,
-      weight: 80,
-      effortLevel: 8,
-    },
-    {
-      id: 3,
-      date: "2025-10-25",
-      exercise: "Trote",
-      time: "25 min",
-      distance: "4 km",
-      rhythm: 90,
-      effortLevel: 6,
-    },
-    {
-      id: 4,
-      date: "2025-10-20",
-      exercise: "Peso muerto",
-      reps: 8,
-      sets: 3,
-      weight: 90,
-      effortLevel: 7,
-    },
-    {
-      id: 5,
-      date: "2025-10-15",
-      exercise: "Press militar",
-      reps: 10,
-      sets: 3,
-      weight: 40,
-      effortLevel: 6,
-    },
-    {
-      id: 6,
-      date: "2025-10-10",
-      exercise: "Trote",
-      time: "20 min",
-      distance: "3.5 km",
-      effortLevel: 5,
-    },
-  ];
 
-  const visibleRecords = showAll ? records : records.slice(0, 4);
+  // try - catch
+  useEffect(() => {
+    const handleProgressList = () => {
+      const userId = "1"
+      const data = GetProgressByUser({userId});
+      setProgresList(data);
+    };
+
+    handleProgressList();
+  }, []);
+
+  const visibleRecords = showAll ? progressList : progressList.slice(0, 4);
 
   return (
-    <div className="py-4">
+    <div className="py-4 ">
       <div className="grid gap-3">
         {visibleRecords.map((record) => (
           <div
             key={record.id}
-            className="bg-white p-4 rounded-md shadow-sm border border-gray-200 hover:shadow-md transition-all duration-150"
+            className="bg-background p-4 rounded-md shadow-sm hover:shadow-md transition-all duration-150 hover:translate-y-1 hover:cursor-pointer"
           >
             <div className="flex justify-between items-center">
               <p className="font-semibold text-lg">{record.exercise}</p>

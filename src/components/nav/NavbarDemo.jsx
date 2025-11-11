@@ -29,7 +29,7 @@ export function NavbarDemo() {
           <NavbarButton variant="secondary" to="/reports">
             Reportes
           </NavbarButton>
-          <NavbarButton variant="primary" to="/profile">
+          <NavbarButton variant="primary" to="/user/profile">
             Perfil
           </NavbarButton>
         </div>
@@ -148,7 +148,7 @@ const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-text dark:text-text">GYM Icesi</span>
+      <span className="font-medium text-text dark:text-text">GYM Icesi - Estudiante</span>
     </Link>
   );
 };

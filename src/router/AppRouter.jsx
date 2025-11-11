@@ -6,34 +6,40 @@ import Home from "../screens/Home";
 import ExerciseScreen from "../screens/exercise/ExerciseScreen";
 import RoutineScreen from "../screens/routine/RoutineScreen";
 import ProgressScreen from "../screens/progress/ProgressScreen";
+import ProfileScreen from "../screens/user/ProfileScreen";
 
 const router = createBrowserRouter([
   {
     path: "/auth/login",
-    element: <LoginScreen/>,
+    element: <LoginScreen />,
   },
   {
     path: "/",
-    element: <HomeScreen/>,
+    element: <HomeScreen />,
     children: [
       {
-        index:true,
-        element: <Home/>
+        index: true,
+        element: <Home />,
       },
       {
         path: "/routines",
-        element: <RoutineScreen/>
+        element: <RoutineScreen />,
       },
       {
         path: "/exercises",
-        element: <ExerciseScreen/>
+        element: <ExerciseScreen />,
       },
       {
         path: "/progress",
-        element: <ProgressScreen/>
-      }
-    ]
+        element: <ProgressScreen />,
+      },
+      {
+        path: "/user/profile",
+        element: <ProfileScreen />,
+      },
+    ],
   },
+
   {
     path: "*",
     element: <NotFound />,

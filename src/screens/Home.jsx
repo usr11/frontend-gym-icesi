@@ -25,8 +25,9 @@ const Home = () => {
 
   return (
     <div className="h-auto">
-      <div className=" p-3 rounded-md">
-        <h2 className="text-3xl mb-5">Rutinas mas frecuentes</h2>
+      <div className=" p-15 rounded-md bg-background shadow-md">
+        <h2 className="text-3xl mb-5">Holaa Juan!!!</h2>
+        <h2 className="text-xl mb-5">Tus rutinas frecuentes</h2>
 
         <div className="grid grid-cols-3 gap-10 ">
           {routines.length !== 0 &&
@@ -35,13 +36,13 @@ const Home = () => {
             ))}
         </div>
         <div className="mt-15 ">
-          <h2 className="text-3xl mb-10">Calendario</h2>
+          <h2 className="text-xl mb-10">Calendario</h2>
           <div className="bg-blue-200 h-70 m-10">
             
           </div>
         </div>
       </div>
-      <div className=" p-3 rounded-md mt-10">
+      <div className=" p-15 rounded-md bg-background shadow-md mt-10">
         <h2 className="text-3xl mb-10">Progreso reciente</h2>
         <div className="">
           <ProgressExerciseComparison />
