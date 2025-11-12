@@ -7,6 +7,9 @@ import ExerciseScreen from "../screens/exercise/ExerciseScreen";
 import RoutineScreen from "../screens/routine/RoutineScreen";
 import ProgressScreen from "../screens/progress/ProgressScreen";
 import ProfileScreen from "../screens/user/ProfileScreen";
+import RoutineDetailScreen from "../screens/routine/RoutineDetailScreen";
+
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -15,31 +18,55 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <HomeScreen />,
+    element: (
+      <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+        <HomeScreen />
+      </ProtectedRoute>
+    ),
     children: [
+      { index: true, element: <Home /> },
       {
-        index: true,
-        element: <Home />,
+        path: "routines",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <RoutineScreen />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/routines",
-        element: <RoutineScreen />,
+        path: "routines/:id",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <RoutineDetailScreen />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/exercises",
-        element: <ExerciseScreen />,
+        path: "exercises",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <ExerciseScreen />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/progress",
-        element: <ProgressScreen />,
+        path: "progress",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <ProgressScreen />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "/user/profile",
-        element: <ProfileScreen />,
+        path: "user/profile",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <ProfileScreen />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
-
   {
     path: "*",
     element: <NotFound />,

@@ -1,16 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import login from "../../api/auth/Login";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login: setAuthUser } = useAuth();
+  const navigate = useNavigate(); 
+  const { user } = useAuth();
 
-  const handleLogin = () => {
-    console.log(username)
-    console.log(password)
-    //try
+  // No permite ir al login cuando se esta logedo
+  useEffect(() => {
+  if (user) {
+    navigate("/", { replace: true });
+  }
+}, [user, navigate]);
+
+  const handleLogin = async () => {
+    try {
+      const response = await login({ username, password });
+      setAuthUser(response.user, response.token); 
+      navigate("/", { replace: true });
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   return (

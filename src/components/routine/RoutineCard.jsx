@@ -4,7 +4,8 @@ import Modal from "../ui/Modal";
 
 const RoutineCard = ({ routine, lessInfo }) => {
   if (!routine) return null;
-  const { id, urlImg, name, isCertified, startDate, createdBy } = routine;
+  const { id, urlImg, name, description, isCertified, isPredefined,startDate, createdBy } =
+    routine;
   const [showModal, setShowModal] = useState(false);
   // falta redireccion de ver detalles, con id
 
@@ -39,7 +40,11 @@ const RoutineCard = ({ routine, lessInfo }) => {
                 {isCertified ? "Certificada" : "No certificada"}
               </p>
               <div className=" ml-auto">
-                <Link className="text-md hover:underline" to={"#"} onClick={() => setShowModal(true)}>
+                <Link
+                  className="text-md hover:underline"
+                  to={`/routines/${id}`}
+                  // onClick={() => setShowModal(true)}
+                >
                   Ver detalles
                 </Link>
               </div>
@@ -55,16 +60,22 @@ const RoutineCard = ({ routine, lessInfo }) => {
             alt={name}
             className="w-full h-40 object-cover rounded-md mb-4"
           />
+          <p className="text-gray-700 mb-2">{description}</p>
           <p className="text-gray-700 mb-2">
-            <strong>Creada por:</strong> {createdBy}
+            <span className="text-lg">Creada por:</span> {createdBy}
           </p>
           <p className="text-gray-700 mb-2">
-            <strong>Inicio:</strong> {startDate}
+            <span className="text-lg">Inicio:</span> {startDate}
           </p>
           <p className="text-gray-700 mb-2">
-            <strong>Certificación:</strong>{" "}
-            {isCertified ? "Sí" : "No certificada"}
+            <span className="text-lg">Predefinida:</span>{" "}
+            <span className={isPredefined ? " text-green-500" : "text-red-500"}>{isPredefined ? "Sí" : "No"}</span>
           </p>
+          <p className="text-gray-700 mb-2">
+            <span className="text-lg">Certificada:</span>{" "}
+            <span className={isCertified ? " text-green-500" : "text-red-500"}>{isCertified ? "Sí" : "No"}</span>
+          </p>
+          
         </Modal>
       </div>
     </>

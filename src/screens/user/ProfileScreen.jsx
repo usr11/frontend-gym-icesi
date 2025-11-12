@@ -1,16 +1,33 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-const ProfileScreen = () => {
-  const [user, setUser] = useState({});
+const ProfileScreen = () => {  
+  const { user, logout } = useAuth(); 
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+    if (user) {
+      setUserData(user);
+    }
+  }, [user]);
+
+  const handleLogout = () => {
+    logout();         // borra del contexto y localStorage
+    navigate("/auth/login"); // redirige al login
+  };
 
   return (
     <div className=" p-15 rounded-md shadow-md">
       <div className=" flex flex-row justify-between">
         <p className="my-auto text-xl">Hola {user.username}</p>
-        <Link >
-          <button className="bg-red-400 py-3 px-4 text-primary rounded-md cursor-pointer hover:-translate-y-1 transition-all ease-in duration-100">Cerrar sesion</button>
-        </Link>
+                <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white py-3 px-4 rounded-md cursor-pointer hover:-translate-y-1 transition-all ease-in duration-100"
+        >
+          Cerrar sesión
+        </button>
       </div>
       <div className=" mt-10 ">
         <p className="text-xl">Tu informacion:</p>

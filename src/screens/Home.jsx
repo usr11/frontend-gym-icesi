@@ -35,12 +35,12 @@ const Home = () => {
               <RoutineCard key={routine.id} routine={routine} />
             ))}
         </div>
-        <div className="mt-15 ">
+        {/* <div className="mt-15 ">
           <h2 className="text-xl mb-10">Calendario</h2>
           <div className="bg-blue-200 h-70 m-10">
             
           </div>
-        </div>
+        </div> */}
       </div>
       <div className=" p-15 rounded-md bg-background shadow-md mt-10">
         <h2 className="text-3xl mb-10">Progreso reciente</h2>

@@ -3,8 +3,11 @@ import { cn } from "../../lib/util";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import React, { useRef, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 
 export function NavbarDemo() {
+  
   const navItems = [
     {
       name: "Rutinas",
@@ -137,6 +140,7 @@ const NavItems = ({ items, className, onItemClick }) => {
 };
 
 const NavbarLogo = () => {
+  const { user } = useAuth();
   return (
     <Link
       to="/"
@@ -148,7 +152,7 @@ const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="font-medium text-text dark:text-text">GYM Icesi - Estudiante</span>
+      <span className="font-medium text-text dark:text-text">GYM Icesi - {user?.role}</span>
     </Link>
   );
 };
