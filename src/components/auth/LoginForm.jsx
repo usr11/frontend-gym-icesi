@@ -28,15 +28,15 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      login({ username, password })
-      // const response = await login({ username, password });
-      // setAuthUser(response.user, response.token);
+      // login({ username, password })
+      const response = await login({ username, password });
+      setAuthUser(response.user, response.token);
 
-      // if (response.user.role === "admin") {
-      //   navigate("/managment", { replace: true });
-      // } else {
-      //   navigate("/", { replace: true });
-      // }
+      if (response.user.role === "admin") {
+        navigate("/managment", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (e) {
       setError(e.message);
     }

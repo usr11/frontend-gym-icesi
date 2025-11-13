@@ -3,12 +3,18 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../styles/RoutineScreen.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CreateRoutineForm from "../../components/routine/CreateRoutineForm";
+import getRoutinesByUser from "../../api/routines/RoutinesByUser";
+import { useAuth } from "../../context/AuthContext";
+import getComplementaryRoutinesByUser from "../../api/routines/ComplementaryRoutinesByUser";
 
 const RoutineScreen = () => {
   //CUANDO LOS LLAME Y SEAM MAS DE 3 PASA A SER TRUE
+  const { user } = useAuth();
   const [arrowsEnable, setArrowsEnable] = useState(true);
+  const [routines, setRoutines] = useState([]);
+  const [unActiveroutines, setUnActiveRoutines] = useState([]);
 
   const settingsSlide = {
     dots: false,
@@ -19,10 +25,33 @@ const RoutineScreen = () => {
     arrows: arrowsEnable,
   };
 
-  const routines = [
+  useEffect(() => {
+    const fetchRoutines = async () => {
+      try {
+        console.log(user?.id);
+
+        const data = await getRoutinesByUser({ userId: user?.id });
+        const dataC = await getComplementaryRoutinesByUser({
+          userId: user?.id,
+        });
+
+        console.log(data);
+        console.log(dataC);
+        setRoutines(data);
+        setUnActiveRoutines(dataC);
+        
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchRoutines();
+  }, []);
+  const routinesEx = [
     {
       id: "1",
-      urlImg: "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
+      urlImg:
+        "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
       name: "Rutina 1",
       description: "Esta es una descripcion sencilla",
       isCertified: false,
@@ -32,27 +61,12 @@ const RoutineScreen = () => {
     },
     {
       id: "2",
-      urlImg: "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
+      urlImg:
+        "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
       name: "Rutina 2",
       isCertified: true,
       startDate: "12/03/2020",
       createdBy: "Pablo",
-    },
-    {
-      id: "3",
-      urlImg: "https://digitalagencynetwork.com/wp-content/uploads/2023/09/best-fitness-gym-website-design-examples.png",
-      name: "Rutina 3",
-      isCertified: false,
-      startDate: "12/03/2020",
-      createdBy: "Sebastian",
-    },
-    {
-      id: "4",
-      urlImg: "https://digitalagencynetwork.com/wp-content/uploads/2023/09/best-fitness-gym-website-design-examples.png",
-      name: "Rutina 4",
-      isCertified: true,
-      startDate: "12/03/2020",
-      createdBy: "Miguel",
     },
   ];
 

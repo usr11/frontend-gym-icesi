@@ -44,7 +44,7 @@ import { baseurl } from "../../utils/constatn";
 
 
 
-const GetExercisesByUser = async ({ userId }) => {
+const getExercisesByUser = async ({ userId }) => {
   try {
     const token = localStorage.getItem("accessToken");
 
@@ -52,7 +52,7 @@ const GetExercisesByUser = async ({ userId }) => {
       throw new Error("Token no encontrado. Por favor inicia sesión nuevamente.");
     }
 
-    const response = await fetch(`${baseurl}/api/v1/exercises/user/${userId}`, {
+    const response = await fetch(`${baseurl}/api/exercises/byUser/${userId}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -73,4 +73,4 @@ const GetExercisesByUser = async ({ userId }) => {
   }
 };
 
-export default GetExercisesByUser;
+export default getExercisesByUser;

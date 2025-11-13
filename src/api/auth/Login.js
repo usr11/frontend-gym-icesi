@@ -1,8 +1,6 @@
-
 // const login = async ({ username, password }) => {
 
 //   await new Promise((resolve) => setTimeout(resolve, 500));
-
 
 //   const users = [
 //     { id: "1", name: "Carlitos", role: "estudiante", username: "estudiante", password: "1234" },
@@ -25,9 +23,7 @@
 
 // export default login;
 
-
 import { baseurl } from "../../utils/constatn";
-
 
 const login = async ({ username, password }) => {
   const body = JSON.stringify({ username, password });
@@ -46,16 +42,24 @@ const login = async ({ username, password }) => {
 
   const data = await response.json();
 
-  console.log(data)
+  console.log(data);
 
-  // ⚙️ Ajusta según la estructura real de tu API
-  const { accessToken, user } = data;
+  const token = data.token;
+  const user = {
+    id: data.userId,
+    name: data.fullName,
+    role: data.role,
+    username: data.username,
+    email:data.email
+  };
 
-  if (!accessToken || !user) {
+  console.log(user);
+
+  if (!token || !user) {
     throw new Error("Respuesta inválida del servidor");
   }
 
-  return { user, token: accessToken };
+  return { user, token };
 };
 
 export default login;

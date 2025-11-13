@@ -6,8 +6,16 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
   const [showModal, setShowModal] = useState(false);
 
   if (!exercise) return null;
-  const { id, name, urlImg, difficulty, duration, isPredefined, createdBy , urlVideo} =
-    exercise;
+  const {
+    id,
+    name,
+    urlImg,
+    difficulty,
+    duration,
+    isPredefined,
+    createdByName,
+    urlVideo,
+  } = exercise;
   // id para la redireccion
 
   return (
@@ -30,7 +38,7 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
             {!lessInfo ? (
               <p className="text-md">
                 Creada por:
-                <span className="text-sm"> {createdBy}</span>
+                <span className="text-sm"> {createdByName}</span>
               </p>
             ) : (
               <p className="text-md hover:underline hover:cursor-pointer">
@@ -66,7 +74,7 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
         />
         {/* <p className="text-gray-700 mb-2">{description}</p> */}
         <p className="text-gray-700 mb-2">
-          <span className="text-lg">Creada por:</span> {createdBy}
+          <span className="text-lg">Creada por:</span> {createdByName}
         </p>
         <p className="text-gray-700 mb-2">
           <span className="text-lg">Dificultad:</span> {difficulty}
@@ -89,12 +97,12 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
             <span className="text-lg">Videos:</span>
           </p>
           <div className="flex justify-center my-4">
-  <video
-    src={exercise.urlVideo}
-    controls
-    className="w-80 h-44 rounded-md shadow-md"
-  ></video>
-</div>
+            <video
+              src={exercise.urlVideo}
+              controls
+              className="w-80 h-44 rounded-md shadow-md"
+            ></video>
+          </div>
         </div>
       </Modal>
     </>

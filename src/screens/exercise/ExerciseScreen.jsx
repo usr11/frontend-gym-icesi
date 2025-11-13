@@ -5,7 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../styles/RoutineScreen.css";
 import { useEffect, useState } from "react";
 import CreateExerciseForm from "../../components/exercise/CreateExerciseForm";
-import GetExercisesByUser from "../../api/exercises/GetExercisesByUser";
+import getExercisesByUser from "../../api/exercises/GetExercisesByUser";
+import getComplementaryExercises from "../../api/exercises/GetComplementaryExercises";
 import { useAuth } from "../../context/AuthContext";
 
 const ExerciseScreen = () => {
@@ -37,20 +38,26 @@ const ExerciseScreen = () => {
   // }, []);
 
   useEffect(() => {
-  const fetchExercises =  () => {
-    try {
-      const data =  GetExercisesByUser({ userId: 1 });
-      console.log(data)
-      // setActiveExercises(data);
-      // setUnActiveExercises(data)
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+    const fetchExercises = async () => {
+      try {
+        console.log(user?.id);
 
-  fetchExercises();
-}, []);
+        const data = await getExercisesByUser({ userId: user?.id });
+        const dataComplementary = await getComplementaryExercises({
+          userId: user?.id,
+        });
+        console.log(data);
+        console.log(dataComplementary);
+        // setActiveExercises(data);
+        setActiveExercises(data);
+        setUnActiveExercises(dataComplementary);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
 
+    fetchExercises();
+  }, []);
 
   return (
     <div className="h-auto">
