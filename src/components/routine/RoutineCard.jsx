@@ -12,7 +12,7 @@ const RoutineCard = ({ routine, lessInfo }) => {
   return (
     <>
       <div className=" shadow-md h-90 rounded-md hover:translate-y-2 transition-all ease-out duration-150 bg-background">
-        <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">
+        <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">  
           {urlImg}
           <img
             src={urlImg}
@@ -26,7 +26,7 @@ const RoutineCard = ({ routine, lessInfo }) => {
             <p className="text-md">
               {lessInfo ? "Creada por: " : "Fecha de inicio: "}
               <span className="text-sm">
-                {lessInfo ? createdBy : startDate}
+                {lessInfo ? createdBy.name : startDate}
               </span>
             </p>
             {!lessInfo && (
@@ -63,7 +63,7 @@ const RoutineCard = ({ routine, lessInfo }) => {
           />
           <p className="text-gray-700 mb-2">{description}</p>
           <p className="text-gray-700 mb-2">
-            <span className="text-lg">Creada por:</span> {createdBy}
+            <span className="text-lg">Creada por:</span> {createdBy.name}
           </p>
           <p className="text-gray-700 mb-2">
             <span className="text-lg">Inicio:</span> {startDate}

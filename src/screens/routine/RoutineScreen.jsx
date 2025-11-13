@@ -94,8 +94,8 @@ const RoutineScreen = () => {
         <h2 className="text-3xl mb-10">Otras rutinas</h2>
         <div className="routine-slider">
           <Slider {...settingsSlide}>
-            {routines.length !== 0 &&
-              routines.map((routine) => (
+            {unActiveroutines.length !== 0 &&
+              unActiveroutines.map((routine) => (
                 <RoutineCard
                   key={routine.id}
                   routine={routine}

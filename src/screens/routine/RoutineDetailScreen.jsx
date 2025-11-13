@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import getRoutine from "../../api/routines/GetRoutine";
 
 const RoutineDetailScreen = () => {
   const { routineId } = useParams();
@@ -7,8 +8,8 @@ const RoutineDetailScreen = () => {
 
   useEffect(() => {
     const loadRoutine = () => {
-      // const data = getRoutineDetails(routineId);
-      // setRoutine(data);
+      const data = getRoutine(routineId);
+      setRoutine(data);
     };
 
     loadRoutine();
@@ -42,6 +43,7 @@ const RoutineDetailScreen = () => {
         <div  className="flex">
           <div>
             <h2 className="text-2xl font-semibold mb-4 text-primary">{name}</h2>
+            
             <img
               src={urlImg}
               alt={name}
@@ -92,32 +94,7 @@ const RoutineDetailScreen = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10">
-          <h2 className="text-2xl">Semana</h2>
-          <div className="mt-5 flex justify-between">
-            <div>
-              <p>Lunes:</p>
-            </div>
-            <div>
-              <p>Martes:</p>
-            </div>
-            <div>
-              <p>Miercoles:</p>
-            </div>
-            <div>
-              <p>Jueves:</p>
-            </div>
-            <div>
-              <p>Viernes:</p>
-            </div>
-            <div>
-              <p>Sabado:</p>
-            </div>
-            <div>
-              <p>Domingo:</p>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
