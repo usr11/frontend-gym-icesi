@@ -6,8 +6,10 @@ import "../../styles/RoutineScreen.css";
 import { useEffect, useState } from "react";
 import CreateExerciseForm from "../../components/exercise/CreateExerciseForm";
 import GetExercisesByUser from "../../api/exercises/GetExercisesByUser";
+import { useAuth } from "../../context/AuthContext";
 
 const ExerciseScreen = () => {
+  const { user } = useAuth();
   const [arrowsEnable, setArrowsEnable] = useState(true);
   const [activeExercises, setActiveExercises] = useState([]);
   const [unActiveExercises, setUnActiveExercises] = useState([]);
@@ -21,18 +23,34 @@ const ExerciseScreen = () => {
     arrows: arrowsEnable,
   };
 
-  useEffect(() => {
-    const updateExercises = () => {
-      const userId = "1";
-      const data = GetExercisesByUser({ userId });
-      setActiveExercises(data);
-      //logica para determinar cuales ejercicios no tiene el usuario
-      const dataUnActive = GetExercisesByUser({ userId });
-      setUnActiveExercises(dataUnActive);
-    };
+  // useEffect(() => {
+  //   const updateExercises = () => {
+  //     const userId = "1";
+  //     const data = GetExercisesByUser({ userId });
+  //     setActiveExercises(data);
+  //     //logica para determinar cuales ejercicios no tiene el usuario
+  //     const dataUnActive = GetExercisesByUser({ userId });
+  //     setUnActiveExercises(dataUnActive);
+  //   };
 
-    updateExercises();
-  }, []);
+  //   updateExercises();
+  // }, []);
+
+  useEffect(() => {
+  const fetchExercises =  () => {
+    try {
+      const data =  GetExercisesByUser({ userId: 1 });
+      console.log(data)
+      // setActiveExercises(data);
+      // setUnActiveExercises(data)
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  fetchExercises();
+}, []);
+
 
   return (
     <div className="h-auto">

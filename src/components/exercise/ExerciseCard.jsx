@@ -6,7 +6,7 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
   const [showModal, setShowModal] = useState(false);
 
   if (!exercise) return null;
-  const { id, name, urlImg, difficulty, duration, isPredefined, createdBy } =
+  const { id, name, urlImg, difficulty, duration, isPredefined, createdBy , urlVideo} =
     exercise;
   // id para la redireccion
 
@@ -84,10 +84,17 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
             {isPredefined ? "Sí" : "No"}
           </span>
         </p>
-        <div>
+        <div className="">
           <p className="text-gray-700 mb-2">
             <span className="text-lg">Videos:</span>
           </p>
+          <div className="flex justify-center my-4">
+  <video
+    src={exercise.urlVideo}
+    controls
+    className="w-80 h-44 rounded-md shadow-md"
+  ></video>
+</div>
         </div>
       </Modal>
     </>

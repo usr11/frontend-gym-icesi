@@ -22,7 +22,7 @@ const RoutineScreen = () => {
   const routines = [
     {
       id: "1",
-      urlImg: "aaa",
+      urlImg: "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
       name: "Rutina 1",
       description: "Esta es una descripcion sencilla",
       isCertified: false,
@@ -32,7 +32,7 @@ const RoutineScreen = () => {
     },
     {
       id: "2",
-      urlImg: "aaa",
+      urlImg: "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
       name: "Rutina 2",
       isCertified: true,
       startDate: "12/03/2020",
@@ -40,7 +40,7 @@ const RoutineScreen = () => {
     },
     {
       id: "3",
-      urlImg: "aaa",
+      urlImg: "https://digitalagencynetwork.com/wp-content/uploads/2023/09/best-fitness-gym-website-design-examples.png",
       name: "Rutina 3",
       isCertified: false,
       startDate: "12/03/2020",
@@ -48,7 +48,7 @@ const RoutineScreen = () => {
     },
     {
       id: "4",
-      urlImg: "aaa",
+      urlImg: "https://digitalagencynetwork.com/wp-content/uploads/2023/09/best-fitness-gym-website-design-examples.png",
       name: "Rutina 4",
       isCertified: true,
       startDate: "12/03/2020",

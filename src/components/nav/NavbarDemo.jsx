@@ -5,23 +5,51 @@ import React, { useRef, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-
 export function NavbarDemo() {
-  
-  const navItems = [
-    {
-      name: "Rutinas",
-      link: "/routines",
-    },
-    {
-      name: "Ejercicios",
-      link: "/exercises",
-    },
-    {
-      name: "Progreso",
-      link: "/progress",
-    },
-  ];
+  const { user } = useAuth();
+  let navItems = [];
+  switch (user?.role) {
+    case "estudiante":
+      navItems = [
+        {
+          name: "Rutinas",
+          link: "/routines",
+        },
+        {
+          name: "Progreso",
+          link: "/progress",
+        },
+        {
+          name: "Ejercicios",
+          link: "/exercises",
+        },
+      ];
+      break;
+    case "entrenador":
+      navItems = [
+        {
+          name: "Rutinas de usuarios",
+          link: "##",
+        },
+        {
+          name: "Progreso de usuarios",
+          link: "#",
+        },
+        {
+          name: "Ejercicios",
+          link: "/exercises",
+        },
+      ];
+      break;
+    case "admin":
+      navItems = [
+        {
+          name: "Gestion de usuarios",
+          link: "/managment",
+        },
+      ];
+      break;
+  }
 
   return (
     <Navbar>
@@ -147,12 +175,14 @@ const NavbarLogo = () => {
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
       <img
-        src="https://assets.aceternity.com/logo-dark.png"
+        src="/logo.png"
         alt="logo"
         width={30}
         height={30}
       />
-      <span className="font-medium text-text dark:text-text">GYM Icesi - {user?.role}</span>
+      <span className="font-medium text-text dark:text-text">
+        GYM Icesi - {user?.role}
+      </span>
     </Link>
   );
 };

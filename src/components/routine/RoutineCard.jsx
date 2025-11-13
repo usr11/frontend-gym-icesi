@@ -13,6 +13,7 @@ const RoutineCard = ({ routine, lessInfo }) => {
     <>
       <div className=" shadow-md h-90 rounded-md hover:translate-y-2 transition-all ease-out duration-150 bg-background">
         <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">
+          {urlImg}
           <img
             src={urlImg}
             alt="routineImg"

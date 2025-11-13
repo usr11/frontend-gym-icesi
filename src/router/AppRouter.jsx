@@ -8,6 +8,7 @@ import RoutineScreen from "../screens/routine/RoutineScreen";
 import ProgressScreen from "../screens/progress/ProgressScreen";
 import ProfileScreen from "../screens/user/ProfileScreen";
 import RoutineDetailScreen from "../screens/routine/RoutineDetailScreen";
+import ManagmentUserScreen from "../screens/user/ManagmentUserScreen";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 
@@ -54,6 +55,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
             <ProgressScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "managment",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <ManagmentUserScreen />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "managment",
+        element: (
+          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
+            <ManagmentUserScreen />
           </ProtectedRoute>
         ),
       },
