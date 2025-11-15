@@ -23,28 +23,26 @@ const RoutineScreen = () => {
     slidesToScroll: 1,
     arrows: true,
   };
+  const fetchRoutines = async () => {
+    try {
+      console.log(user?.username);
 
+      const data = await getRoutinesByUser({ userId: user?.username });
+      const dataC = await getComplementaryRoutinesByUser({
+        userId: user?.id,
+      });
+
+      console.log("Numero de rutinas que tiene" + data.length);
+      console.log(data);
+      console.log("Numero de rutinas que no tiene: " + dataC);
+      console.log(dataC);
+      setRoutines(data);
+      setUnActiveRoutines(dataC);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   useEffect(() => {
-    const fetchRoutines = async () => {
-      try {
-        console.log(user?.id);
-
-        const data = await getRoutinesByUser({ userId: user?.id });
-        const dataC = await getComplementaryRoutinesByUser({
-          userId: user?.id,
-        });
-
-        console.log("Numero de rutinas que tiene" + data.length);
-        console.log(data);
-        console.log("Numero de rutinas que no tiene: " + dataC);
-        console.log(dataC);
-        setRoutines(data);
-        setUnActiveRoutines(dataC);
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-
     fetchRoutines();
   }, []);
 
@@ -72,7 +70,7 @@ const RoutineScreen = () => {
       <div className=" mt-15 p-15 rounded-md shadow-md bg-background">
         <h2 className="text-3xl mb-10">Crear rutina</h2>
         <div className="  m-5 py-10 ">
-          <CreateRoutineForm />
+          <CreateRoutineForm fetchRoutines={fetchRoutines} />
         </div>
       </div>
       <div className=" mt-15 p-15 rounded-md bg-background shadow-md">

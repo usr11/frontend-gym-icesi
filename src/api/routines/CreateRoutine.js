@@ -1,18 +1,16 @@
 import { baseurl } from "../../utils/constatn";
 
-const createExercise = async (exerciseData) => {
+const createRoutine = async (routineData) => {
   const token = localStorage.getItem("accessToken");
 
-  console.log("DATA QUE SE ENVÍA:", exerciseData);
-
   try {
-    const response = await fetch(`${baseurl}/api/exercises`, {
+    const response = await fetch(`${baseurl}/api/routines`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(exerciseData),
+      body: JSON.stringify(routineData),
     });
 
     // Manejo seguro de errores
@@ -31,7 +29,7 @@ const createExercise = async (exerciseData) => {
         parsed?.message ||
           parsed?.error ||
           raw ||
-          "No se pudo crear el ejercicio"
+          "No se pudo crear la rutina"
       );
     }
 
@@ -40,9 +38,9 @@ const createExercise = async (exerciseData) => {
     return result;
 
   } catch (error) {
-    console.error("Error creando ejercicio:", error);
+    console.error("Error creando rutina:", error);
     throw error;
   }
 };
 
-export default createExercise;
+export default createRoutine;

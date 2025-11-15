@@ -1,16 +1,15 @@
-// import { API_URL } from "../config"; // Ajusta según tu estructura (ej: import.meta.env.VITE_API_URL)
-// import { getAccessToken } from "../../utils/auth"; // O como estés guardando tu token
 import { baseurl } from "../../utils/constatn";
 
 const CreateProgress = async (progressData) => {
-  try {
-    const token = localStorage.getItem("accessToken");; // Si usas AuthContext, puedes pasar el token por parámetro en vez de importarlo aquí
+  
+  const token = localStorage.getItem("accessToken");
 
-    console.log(JSON.stringify(progressData))
+  try {
+    console.log(JSON.stringify(progressData));
     const response = await fetch(`${baseurl}/api/progress`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(progressData),

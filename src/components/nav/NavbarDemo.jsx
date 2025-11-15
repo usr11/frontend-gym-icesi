@@ -28,11 +28,11 @@ export function NavbarDemo() {
     case "entrenador":
       navItems = [
         {
-          name: "Rutinas de usuarios",
+          name: "Rutinas",
           link: "##",
         },
         {
-          name: "Progreso de usuarios",
+          name: "Progreso",
           link: "#",
         },
         {

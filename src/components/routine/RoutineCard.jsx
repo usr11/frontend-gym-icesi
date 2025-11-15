@@ -6,15 +6,15 @@ const RoutineCard = ({ routine, lessInfo }) => {
   if (!routine) return null;
   const navigate = useNavigate();
   const {
-    id,
-    urlImg,
-    name,
-    description,
-    isCertified,
-    isPredefined,
-    startDate,
-    createdBy,
-  } = routine;
+    id = "sin-id",
+    urlImg = "https://via.placeholder.com/300x200?text=Sin+imagen",
+    name = "Rutina sin nombre",
+    description = "Sin descripción disponible",
+    isCertified = false,
+    isPredefined = false,
+    startDate = "Fecha no disponible",
+    createdBy = { name: "Desconocido" },
+  } = routine || {};
   const [showModal, setShowModal] = useState(false);
   const handleViewDetails = () => {
     navigate(`/routines/${id}`, { state: { routine } });
@@ -36,7 +36,8 @@ const RoutineCard = ({ routine, lessInfo }) => {
             <p className="text-md">
               {lessInfo ? "Creada por: " : "Fecha de inicio: "}
               <span className="text-sm">
-                {lessInfo ? createdBy.name : startDate}
+                {lessInfo ? createdBy?.name || "Desconocido" : startDate}
+
               </span>
             </p>
             {!lessInfo && (
@@ -73,7 +74,8 @@ const RoutineCard = ({ routine, lessInfo }) => {
           />
           <p className="text-gray-700 mb-2">{description}</p>
           <p className="text-gray-700 mb-2">
-            <span className="text-lg">Creada por:</span> {createdBy.name}
+            <span className="text-lg">Creada por:</span> {createdBy?.name || "Desconocido"}
+
           </p>
           <p className="text-gray-700 mb-2">
             <span className="text-lg">Inicio:</span> {startDate}

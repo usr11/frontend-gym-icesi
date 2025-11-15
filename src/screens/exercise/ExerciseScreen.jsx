@@ -24,19 +24,17 @@ const ExerciseScreen = () => {
     arrows: arrowsEnable,
   };
 
-
-  useEffect(() => {
-    const fetchExercises = async () => {
+  const fetchExercises = async () => {
       try {
-        console.log(user?.id);
+        console.log(user?.username);
 
-        const data = await getExercisesByUser({ userId: user?.id });
+        const data = await getExercisesByUser({ userId: user?.username });
         const dataComplementary = await getComplementaryExercises({
           userId: user?.id,
         });
-        console.log("ejercicios propios:")
+        console.log("ejercicios propios:");
         console.log(data);
-        console.log("todos lo ejercios")
+        console.log("todos lo ejercios");
         console.log(dataComplementary);
         setActiveExercises(data);
         setUnActiveExercises(dataComplementary);
@@ -45,6 +43,9 @@ const ExerciseScreen = () => {
       }
     };
 
+  useEffect(() => {
+    
+
     fetchExercises();
   }, []);
 
@@ -52,7 +53,8 @@ const ExerciseScreen = () => {
     <div className="h-auto">
       <div className=" p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Ejercicios practicados</h2>
-        <div className="routine-slider">
+        {activeExercises.length !== 0 ? (
+          <div className="routine-slider">
           <Slider {...settingsSlide}>
             {activeExercises.length !== 0 &&
               activeExercises.map((exercise) => (
@@ -64,24 +66,30 @@ const ExerciseScreen = () => {
               ))}
           </Slider>
         </div>
+        ) : (
+          <p>No practicas ningun ejercicio</p>
+        ) }
       </div>
       <div className=" mt-15 p-15 rounded-md shadow-md bg-background">
         <h2 className="text-3xl mb-10">Crear ejercicio</h2>
         <div className="  m-5 py-10 ">
-          <CreateExerciseForm />
+          <CreateExerciseForm fetchExercises={fetchExercises}/>
         </div>
       </div>
       <div className=" mt-15 p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Ejercicios sugeridos</h2>
-        <div className="routine-slider">
-          <Slider {...settingsSlide}>
-            {unActiveExercises.length !== 0 &&
-              unActiveExercises.map((exercise) => (
-                <ExerciseCard key={exercise.id} exercise={exercise} />
-              ))}
-          </Slider>
-
-        </div>
+        {unActiveExercises.length !== 0 ? (
+          <div className="routine-slider">
+            <Slider {...settingsSlide}>
+              {unActiveExercises.length !== 0 &&
+                unActiveExercises.map((exercise) => (
+                  <ExerciseCard key={exercise.id} exercise={exercise} />
+                ))}
+            </Slider>
+          </div>
+        ) : (
+          <p>Cargando ejercicios..</p>
+        )}
       </div>
     </div>
   );

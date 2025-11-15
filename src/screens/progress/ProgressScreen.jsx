@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import ProgressComparison from "../../components/progress/ProgressComparison";
 import ProgressRecord from "../../components/progress/ProgressRecord";
 import CreateProgressForm from "../../components/progress/CreateProgressForm";
@@ -9,16 +9,17 @@ import { ProgressContext } from "../../context/ProgressContext";
 const ProgressScreen = () => {
   const { user } = useAuth();
   const { setProgressList } = useContext(ProgressContext);
+  
+  const fetchProgress = async () => {
+    try {
+      const data = await GetProgressByUser({ userId: user?.username });
+      setProgressList(data);
+    } catch (error) {
+      console.error("Error cargando progresos:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchProgress = async () => {
-      try {
-        const data = await GetProgressByUser({ userId: user?.username });
-        setProgressList(data);
-      } catch (error) {
-        console.error("Error cargando progresos:", error);
-      }
-    };
     fetchProgress();
   }, [user]);
 
@@ -31,12 +32,12 @@ const ProgressScreen = () => {
 
       <div className="mt-15 p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl">Tus progresos</h2>
-        <ProgressRecord />
+        <ProgressRecord  />
       </div>
 
       <div className="p-15 rounded-md mt-10 shadow-md bg-background">
         <h2 className="text-3xl mb-10">Registrar progreso</h2>
-        <CreateProgressForm />
+        <CreateProgressForm fetchProgress={fetchProgress}/>
       </div>
     </div>
   );
