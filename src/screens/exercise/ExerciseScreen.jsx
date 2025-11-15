@@ -24,18 +24,6 @@ const ExerciseScreen = () => {
     arrows: arrowsEnable,
   };
 
-  // useEffect(() => {
-  //   const updateExercises = () => {
-  //     const userId = "1";
-  //     const data = GetExercisesByUser({ userId });
-  //     setActiveExercises(data);
-  //     //logica para determinar cuales ejercicios no tiene el usuario
-  //     const dataUnActive = GetExercisesByUser({ userId });
-  //     setUnActiveExercises(dataUnActive);
-  //   };
-
-  //   updateExercises();
-  // }, []);
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -46,9 +34,10 @@ const ExerciseScreen = () => {
         const dataComplementary = await getComplementaryExercises({
           userId: user?.id,
         });
+        console.log("ejercicios propios:")
         console.log(data);
+        console.log("todos lo ejercios")
         console.log(dataComplementary);
-        // setActiveExercises(data);
         setActiveExercises(data);
         setUnActiveExercises(dataComplementary);
       } catch (err) {
@@ -91,10 +80,7 @@ const ExerciseScreen = () => {
                 <ExerciseCard key={exercise.id} exercise={exercise} />
               ))}
           </Slider>
-          {/* ventana con todos los ejercicios */}
-          <h2 className="text-xl mt-10 ml-5 underline cursor-pointer hover:-translate-y-1 transition-all ease-in duration-100">
-            Ver todos los ejercicios
-          </h2>
+
         </div>
       </div>
     </div>

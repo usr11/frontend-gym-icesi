@@ -3,16 +3,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../styles/RoutineScreen.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CreateRoutineForm from "../../components/routine/CreateRoutineForm";
 import getRoutinesByUser from "../../api/routines/RoutinesByUser";
 import { useAuth } from "../../context/AuthContext";
 import getComplementaryRoutinesByUser from "../../api/routines/ComplementaryRoutinesByUser";
-
+import { RoutineContext } from "../../context/RoutineContext";
 const RoutineScreen = () => {
-  //CUANDO LOS LLAME Y SEAM MAS DE 3 PASA A SER TRUE
   const { user } = useAuth();
-  const [arrowsEnable, setArrowsEnable] = useState(true);
+  // const [arrowsEnable, setArrowsEnable] = useState(true);
   const [routines, setRoutines] = useState([]);
   const [unActiveroutines, setUnActiveRoutines] = useState([]);
 
@@ -22,7 +21,7 @@ const RoutineScreen = () => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    arrows: arrowsEnable,
+    arrows: true,
   };
 
   useEffect(() => {
@@ -35,11 +34,12 @@ const RoutineScreen = () => {
           userId: user?.id,
         });
 
+        console.log("Numero de rutinas que tiene" + data.length);
         console.log(data);
+        console.log("Numero de rutinas que no tiene: " + dataC);
         console.log(dataC);
         setRoutines(data);
         setUnActiveRoutines(dataC);
-        
       } catch (err) {
         console.error(err.message);
       }
@@ -47,41 +47,26 @@ const RoutineScreen = () => {
 
     fetchRoutines();
   }, []);
-  const routinesEx = [
-    {
-      id: "1",
-      urlImg:
-        "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
-      name: "Rutina 1",
-      description: "Esta es una descripcion sencilla",
-      isCertified: false,
-      isPredefined: true,
-      startDate: "12/03/2020",
-      createdBy: "Juan",
-    },
-    {
-      id: "2",
-      urlImg:
-        "https://www.glofox.com/wp-content/uploads/2021/02/gym-website.jpg",
-      name: "Rutina 2",
-      isCertified: true,
-      startDate: "12/03/2020",
-      createdBy: "Pablo",
-    },
-  ];
 
   return (
     <div className="h-auto">
       <div className=" p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Rutinas activas</h2>
-        <div className="routine-slider">
-          <Slider {...settingsSlide}>
-            {routines.length !== 0 &&
-              routines.map((routine) => (
-                <RoutineCard key={routine.id} routine={routine} />
+        {routines.length !== 0 ? (
+          <div className="routine-slider">
+            <Slider {...settingsSlide}>
+              {routines.map((routine) => (
+                <RoutineCard
+                  key={routine.id}
+                  routine={routine}
+                  lessInfo={true}
+                />
               ))}
-          </Slider>
-        </div>
+            </Slider>
+          </div>
+        ) : (
+          <p>No tienes rutinas</p>
+        )}
       </div>
 
       <div className=" mt-15 p-15 rounded-md shadow-md bg-background">
@@ -92,18 +77,21 @@ const RoutineScreen = () => {
       </div>
       <div className=" mt-15 p-15 rounded-md bg-background shadow-md">
         <h2 className="text-3xl mb-10">Otras rutinas</h2>
-        <div className="routine-slider">
-          <Slider {...settingsSlide}>
-            {unActiveroutines.length !== 0 &&
-              unActiveroutines.map((routine) => (
+        {unActiveroutines.length !== 0 ? (
+          <div className="routine-slider">
+            <Slider {...settingsSlide}>
+              {unActiveroutines.map((routine) => (
                 <RoutineCard
                   key={routine.id}
                   routine={routine}
                   lessInfo={true}
                 />
               ))}
-          </Slider>
-        </div>
+            </Slider>
+          </div>
+        ) : (
+          <p>Cargando rutinas...</p>
+        )}
       </div>
     </div>
   );

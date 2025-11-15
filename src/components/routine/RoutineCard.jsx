@@ -1,18 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Modal from "../ui/Modal";
 
 const RoutineCard = ({ routine, lessInfo }) => {
   if (!routine) return null;
-  const { id, urlImg, name, description, isCertified, isPredefined,startDate, createdBy } =
-    routine;
+  const navigate = useNavigate();
+  const {
+    id,
+    urlImg,
+    name,
+    description,
+    isCertified,
+    isPredefined,
+    startDate,
+    createdBy,
+  } = routine;
   const [showModal, setShowModal] = useState(false);
-  // falta redireccion de ver detalles, con id
+  const handleViewDetails = () => {
+    navigate(`/routines/${id}`, { state: { routine } });
+  };
 
   return (
     <>
       <div className=" shadow-md h-90 rounded-md hover:translate-y-2 transition-all ease-out duration-150 bg-background">
-        <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">  
+        <div className="relative bg-primary/10 w-full h-1/2 rounded-t-sm overflow-hidden">
           <img
             src={urlImg}
             alt="routineImg"
@@ -40,13 +51,13 @@ const RoutineCard = ({ routine, lessInfo }) => {
                 {isCertified ? "Certificada" : "No certificada"}
               </p>
               <div className=" ml-auto">
-                <Link
-                  className="text-md hover:underline"
+                <button
+                  className="text-md hover:underline hover:cursor-pointer"
                   to={`/routines/${id}`}
-                  // onClick={() => setShowModal(true)}
+                  onClick={handleViewDetails}
                 >
                   Ver detalles
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -69,13 +80,16 @@ const RoutineCard = ({ routine, lessInfo }) => {
           </p>
           <p className="text-gray-700 mb-2">
             <span className="text-lg">Predefinida:</span>{" "}
-            <span className={isPredefined ? " text-green-500" : "text-red-500"}>{isPredefined ? "Sí" : "No"}</span>
+            <span className={isPredefined ? " text-green-500" : "text-red-500"}>
+              {isPredefined ? "Sí" : "No"}
+            </span>
           </p>
           <p className="text-gray-700 mb-2">
             <span className="text-lg">Certificada:</span>{" "}
-            <span className={isCertified ? " text-green-500" : "text-red-500"}>{isCertified ? "Sí" : "No"}</span>
+            <span className={isCertified ? " text-green-500" : "text-red-500"}>
+              {isCertified ? "Sí" : "No"}
+            </span>
           </p>
-          
         </Modal>
       </div>
     </>

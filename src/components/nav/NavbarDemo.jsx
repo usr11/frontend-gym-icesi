@@ -151,7 +151,6 @@ const NavItems = ({ items, className, onItemClick }) => {
               isActive && "border-b-2 "
             )}
             key={`link-${idx}`}
-            href={item.link}
           >
             {hovered === idx && (
               <motion.div

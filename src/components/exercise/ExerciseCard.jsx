@@ -66,42 +66,68 @@ const ExerciseCard = ({ exercise, lessInfo }) => {
 
       {/* modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <h2 className="text-2xl font-semibold mb-4 text-primary">{name}</h2>
-        <img
-          src={urlImg}
-          alt={name}
-          className="w-full h-40 object-cover rounded-md mb-4"
-        />
-        {/* <p className="text-gray-700 mb-2">{description}</p> */}
-        <p className="text-gray-700 mb-2">
-          <span className="text-lg">Creada por:</span> {createdByName}
-        </p>
-        <p className="text-gray-700 mb-2">
-          <span className="text-lg">Dificultad:</span> {difficulty}
-        </p>
-        <p className="text-gray-700 mb-2">
-          <span className="text-lg">Duracion:</span> {duration}
-        </p>
+        <div className="max-h-[80vh] overflow-y-auto px-2">
+          <h2 className="text-2xl font-semibold mb-4 text-primary">{name}</h2>
 
-        {/* <p className="text-gray-700 mb-2">
-          <span className="text-lg">Inicio:</span> {startDate}
-        </p> */}
-        <p className="text-gray-700 mb-2">
-          <span className="text-lg">Predefinida:</span>{" "}
-          <span className={isPredefined ? " text-green-500" : "text-red-500"}>
-            {isPredefined ? "Sí" : "No"}
-          </span>
-        </p>
-        <div className="">
+          <img
+            src={urlImg}
+            alt={name}
+            className="w-full h-40 object-cover rounded-md mb-4"
+          />
+
           <p className="text-gray-700 mb-2">
-            <span className="text-lg">Videos:</span>
+            <span className="text-lg font-semibold">Creada por:</span>{" "}
+            {createdByName}
           </p>
-          <div className="flex justify-center my-4">
-            <video
-              src={exercise.urlVideo}
-              controls
-              className="w-80 h-44 rounded-md shadow-md"
-            ></video>
+
+          <p className="text-gray-700 mb-2">
+            <span className="text-lg font-semibold">Dificultad:</span>{" "}
+            {difficulty}
+          </p>
+
+          <p className="text-gray-700 mb-2">
+            <span className="text-lg font-semibold">Duración:</span> {duration}
+          </p>
+
+          <p className="text-gray-700 mb-2">
+            <span className="text-lg font-semibold">Predefinida:</span>{" "}
+            <span className={isPredefined ? "text-green-500" : "text-red-500"}>
+              {isPredefined ? "Sí" : "No"}
+            </span>
+          </p>
+
+          {/* VIDEOS */}
+          <div className="mt-6">
+            <p className="text-gray-700 mb-3 text-lg font-semibold">Videos:</p>
+
+            {exercise.videos && exercise.videos.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {exercise.videos.map((v, idx) => {
+                  const isYT =
+                    v.includes("youtube.com") || v.includes("youtu.be");
+
+                  return (
+                    <div key={idx} className="flex justify-center">
+                      {isYT ? (
+                        <iframe
+                          src={v.replace("watch?v=", "embed/")}
+                          className="w-80 h-44 rounded-md shadow-md"
+                          allowFullScreen
+                        ></iframe>
+                      ) : (
+                        <video
+                          src={v}
+                          controls
+                          className="w-80 h-44 rounded-md shadow-md"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-gray-500">No hay videos disponibles.</p>
+            )}
           </div>
         </div>
       </Modal>

@@ -1,33 +1,38 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import getRoutine from "../../api/routines/GetRoutine";
 
 const RoutineDetailScreen = () => {
-  const { routineId } = useParams();
-  const [routine, setRoutine] = useState({});
+  const { id } = useParams();
+  const location = useLocation();
+  const routineFromState = location.state?.routine;
+
+  const [routine, setRoutine] = useState(routineFromState || null);
+  const [loading, setLoading] = useState(!routineFromState);
 
   useEffect(() => {
-    const loadRoutine = () => {
-      const data = getRoutine(routineId);
-      setRoutine(data);
-    };
+    // Si no hay routine en el state, cárgala de la API
+    if (!routineFromState && id) {
+      const loadRoutine = async () => {
+        try {
+          const data = await getRoutine(id);
+          setRoutine(data);
+        } catch (err) {
+          console.error("Error cargando rutina:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    loadRoutine();
-  }, []);
+      loadRoutine();
+    }
+  }, [id, routineFromState]);
 
-  const routine1 = {
-    id: "1",
-    urlImg: "aaa",
-    name: "Rutina 1",
-    description: "Esta es una descripcion sencilla",
-    isCertified: false,
-    isPredefined: true,
-    startDate: "12/03/2020",
-    createdBy: "Juan",
-  };
+  if (loading || !routine) {
+    return <div className="text-center p-10">Cargando rutina...</div>;
+  }
 
   const {
-    id,
     urlImg,
     name,
     description,
@@ -35,15 +40,16 @@ const RoutineDetailScreen = () => {
     isPredefined,
     startDate,
     createdBy,
-  } = routine1;
+    exercises,
+  } = routine;
 
   return (
     <div className="flex p-15 bg-background rounded-md shadow-md">
       <div>
-        <div  className="flex">
+        <div className="flex">
           <div>
             <h2 className="text-2xl font-semibold mb-4 text-primary">{name}</h2>
-            
+
             <img
               src={urlImg}
               alt={name}
@@ -51,7 +57,7 @@ const RoutineDetailScreen = () => {
             />
             <p className="text-gray-700 mb-2">{description}</p>
             <p className="text-gray-700 mb-2">
-              <span className="text-lg">Creada por:</span> {createdBy}
+              <span className="text-lg">Creada por:</span> {createdBy?.name || createdBy}
             </p>
             <p className="text-gray-700 mb-2">
               <span className="text-lg">Inicio:</span> {startDate}
@@ -77,10 +83,13 @@ const RoutineDetailScreen = () => {
             <div className="ml-60">
               <h2 className="text-2xl">Lista de ejercicios</h2>
               <div>
-                <h2>Ejer 1</h2>
-                <h2>Ejer 2</h2>
-                <h2>Ejer 3</h2>
-                <h2>Ejer 4</h2>
+                {exercises && exercises.length > 0 ? (
+                  exercises.map((exercise, idx) => (
+                    <h2 key={idx}>{exercise.name || `Ejercicio ${idx + 1}`}</h2>
+                  ))
+                ) : (
+                  <p>No hay ejercicios disponibles</p>
+                )}
               </div>
             </div>
             <div className="ml-60">
@@ -94,7 +103,6 @@ const RoutineDetailScreen = () => {
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   );

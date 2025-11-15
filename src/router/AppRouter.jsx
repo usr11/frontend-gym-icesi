@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import LoginScreen from "../screens/auth/LoginScreen";
 import NotFound from "../screens/errors/NotFound";
 import HomeScreen from "../screens/HomeScreen";
@@ -9,84 +9,104 @@ import ProgressScreen from "../screens/progress/ProgressScreen";
 import ProfileScreen from "../screens/user/ProfileScreen";
 import RoutineDetailScreen from "../screens/routine/RoutineDetailScreen";
 import ManagmentUserScreen from "../screens/user/ManagmentUserScreen";
-
 import { ProtectedRoute } from "./ProtectedRoute";
+import { ProgressProvider } from "../context/ProgressContext";
+import { RoutineProvider } from "../context/RoutineContext";
+
+const RootLayout = () => {
+  return (
+    <RoutineProvider>
+      <ProgressProvider>
+        <Outlet />
+      </ProgressProvider>
+    </RoutineProvider>
+  );
+};
 
 const router = createBrowserRouter([
   {
-    path: "/auth/login",
-    element: <LoginScreen />,
-  },
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-        <HomeScreen />
-      </ProtectedRoute>
-    ),
+    element: <RootLayout />, // Wrapper con el Provider
     children: [
-      { index: true, element: <Home /> },
       {
-        path: "routines",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <RoutineScreen />
-          </ProtectedRoute>
-        ),
+        path: "/auth/login",
+        element: <LoginScreen />,
       },
       {
-        path: "routines/:id",
+        path: "/",
         element: (
           <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <RoutineDetailScreen />
+            <HomeScreen />
           </ProtectedRoute>
         ),
+        children: [
+          { index: true, element: <Home /> },
+          {
+            path: "routines",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <RoutineScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "routines/:id",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <RoutineDetailScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "exercises",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <ExerciseScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "progress",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <ProgressScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "managment",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <ManagmentUserScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "user/profile",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <ProfileScreen />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
       {
-        path: "exercises",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <ExerciseScreen />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "progress",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <ProgressScreen />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "managment",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <ManagmentUserScreen />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "managment",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <ManagmentUserScreen />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "user/profile",
-        element: (
-          <ProtectedRoute allowedRoles={["estudiante", "entrenador", "admin"]}>
-            <ProfileScreen />
-          </ProtectedRoute>
-        ),
+        path: "*",
+        element: <NotFound />,
       },
     ],
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 
