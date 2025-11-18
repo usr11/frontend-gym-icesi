@@ -1,40 +1,51 @@
 import { useEffect, useState } from "react";
 import Button from "../ui/Button";
+import getAllStudents from "../../api/users/getAllStudents";
+import getAllTrainers from "../../api/users/getAllTrainers";
+import changeUserRole from "../../api/users/changeUserRole";
 
 const UserRoleList = () => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState({ type: "", text: "" });
 
   useEffect(() => {
-    // Simulación de usuarios cargados desde una API o base de datos
-    setUsers([
-      { id: "1", name: "Carlos Pérez", role: "estudiante" },
-      { id: "2", name: "Laura García", role: "entrenador" },
-      { id: "3", name: "María Gómez", role: "estudiante" },
-      { id: "4", name: "José Martínez", role: "entrenador" },
-    ]);
+    loadUsers();
   }, []);
 
-  const handleToggleRole = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((u) =>
-        u.id === userId
-          ? {
-              ...u,
-              role: u.role === "estudiante" ? "entrenador" : "estudiante",
-            }
-          : u
-      )
-    );
+  const loadUsers = async () => {
+    try {
+      const students = await getAllStudents();
+      const trainers = await getAllTrainers();
 
-    const changedUser = users.find((u) => u.id === userId);
-    if (changedUser) {
+      const all = [
+        ...students.map((s) => ({ ...s, role: "ESTUDIANTE" })),
+        ...trainers.map((t) => ({ ...t, role: "ENTRENADOR" })),
+      ];
+
+      setUsers(all);
+    } catch (err) {
+      setMessage({ type: "error", text: err.message });
+    }
+  };
+
+  const handleToggleRole = async (username, currentRole) => {
+    const newRole = currentRole === "ESTUDIANTE" ? "ENTRENADOR" : "ESTUDIANTE";
+
+    try {
+      const updated = await changeUserRole({ username, role: newRole });
+
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.username === username ? { ...u, role: newRole } : u
+        )
+      );
+
       setMessage({
         type: "success",
-        text: `El usuario ${changedUser.name} cambió su rol a ${
-          changedUser.role === "estudiante" ? "entrenador" : "estudiante"
-        }.`,
+        text: `El usuario ${updated.fullName} ahora es ${newRole}`,
       });
+    } catch (err) {
+      setMessage({ type: "error", text: err.message });
     }
   };
 
@@ -44,37 +55,28 @@ const UserRoleList = () => {
         Lista de Usuarios y Roles
       </h1>
 
-      {/* Tabla o lista de usuarios */}
       <div className="overflow-x-auto rounded-md">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-3 border-b">ID</th>
+              <th className="p-3 border-b">Username</th>
               <th className="p-3 border-b">Nombre</th>
               <th className="p-3 border-b">Rol</th>
               <th className="p-3 border-b text-center">Acción</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr
-                key={user.id}
-                className="hover:bg-gray-50 transition-colors border-b"
-              >
-                <td className="p-3">{user.id}</td>
-                <td className="p-3">{user.name}</td>
-                <td className="p-3 capitalize">{user.role}</td>
+            {users.map((u) => (
+              <tr key={u.username} className="hover:bg-gray-50 border-b">
+                <td className="p-3">{u.username}</td>
+                <td className="p-3">{u.fullName}</td>
+                <td className="p-3">{u.role}</td>
                 <td className="p-3 text-center">
                   <Button
-                    onClick={() => handleToggleRole(user.id)}
-                    className={`${
-                      user.role === "estudiante"
-                        ? "bg-blue-500 hover:bg-blue-600"
-                        : "bg-green-500 hover:bg-green-600"
-                    } text-white py-1 px-3 rounded`}
+                    onClick={() => handleToggleRole(u.username, u.role)}
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded"
                   >
-                    Cambiar a{" "}
-                    {user.role === "estudiante" ? "entrenador" : "estudiante"}
+                    Cambiar Rol
                   </Button>
                 </td>
               </tr>
@@ -83,7 +85,6 @@ const UserRoleList = () => {
         </table>
       </div>
 
-      {/* Mensaje de estado */}
       {message.text && (
         <div
           className={`text-center font-medium mt-4 ${
