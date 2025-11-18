@@ -12,6 +12,7 @@ import ManagmentUserScreen from "../screens/user/ManagmentUserScreen";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ProgressProvider } from "../context/ProgressContext";
 import { RoutineProvider } from "../context/RoutineContext";
+import UserRoutinesScreen from "../screens/routine/UserRoutinesScreen";
 
 const RootLayout = () => {
   return (
@@ -87,6 +88,16 @@ const router = createBrowserRouter([
                 allowedRoles={["estudiante", "entrenador", "admin"]}
               >
                 <ManagmentUserScreen />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "user_routines",
+            element: (
+              <ProtectedRoute
+                allowedRoles={["estudiante", "entrenador", "admin"]}
+              >
+                <UserRoutinesScreen />
               </ProtectedRoute>
             ),
           },

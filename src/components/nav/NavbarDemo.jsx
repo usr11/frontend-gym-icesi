@@ -29,11 +29,7 @@ export function NavbarDemo() {
       navItems = [
         {
           name: "Rutinas",
-          link: "##",
-        },
-        {
-          name: "Progreso",
-          link: "#",
+          link: "/user_routines",
         },
         {
           name: "Ejercicios",
