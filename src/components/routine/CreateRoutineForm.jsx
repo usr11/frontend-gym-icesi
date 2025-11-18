@@ -14,6 +14,7 @@ const CreateRoutineForm = ({ fetchRoutines }) => {
   const [routineData, setRoutineData] = useState({
     name: "",
     description: "",
+    urlImg: ""
   });
   const [successMsg, setSuccessMsg] = useState("");
 
@@ -48,6 +49,7 @@ const CreateRoutineForm = ({ fetchRoutines }) => {
     const payload = {
       name: routineData.name,
       description: routineData.description,
+      urlImg: routineData.urlImg,
       createdBy: { userId: user.username, name: user.name },
       exercises: selectedExercises,
     };
@@ -58,7 +60,7 @@ const CreateRoutineForm = ({ fetchRoutines }) => {
       const res = await createRoutine(payload);
       setSuccessMsg("Rutina creada correctamente");
 
-      setRoutineData({ name: "", description: "" });
+      setRoutineData({ name: "", description: "", urlImg: "" });
       setSelectedExercises([]);
       fetchRoutines();
       setTimeout(() => setSuccessMsg(""), 2000);
@@ -82,11 +84,21 @@ const CreateRoutineForm = ({ fetchRoutines }) => {
             }
           />
 
+          
+
           <Textarea
             text="Descripción"
             value={routineData.description}
             onChange={(e) =>
               setRoutineData({ ...routineData, description: e.target.value })
+            }
+          />
+
+          <Input
+            text="URL image"
+            value={routineData.name}
+            onChange={(e) =>
+              setRoutineData({ ...routineData, name: e.target.value })
             }
           />
         </div>
