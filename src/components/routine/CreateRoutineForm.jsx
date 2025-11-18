@@ -96,7 +96,7 @@ const CreateRoutineForm = ({ fetchRoutines }) => {
 
           <Input
             text="URL image"
-            value={routineData.name}
+            value={routineData.urlImg}
             onChange={(e) =>
               setRoutineData({ ...routineData, name: e.target.value })
             }
